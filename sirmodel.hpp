@@ -1,3 +1,23 @@
+/****************************************************************************
+    This file is part of Casim.
+
+    Copyright (C) 2014,2015 by Andrey V. Skvortsov
+
+    Casim is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    Casim is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with Casim; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+****************************************************************************/
+
 #ifndef SIRMODEL_HPP
 #define SIRMODEL_HPP
 
@@ -12,22 +32,41 @@ class SIRModel : public FSMModel
 {
     Q_OBJECT
 public:
+    /**
+     * @brief Variable indexes
+     */
     enum class Var_t
     {
-        /** @brief Susceptible */
+        /**
+         * @brief Susceptible
+         */
         S = 0,
-        /** @brief Infectious */
+        /**
+         * @brief Infectious
+         */
         I,
-        /** @brief Recovered */
+        /**
+         * @brief Recovered
+         */
         R,
         NUM_VARS
     };
 
+    /**
+     * @brief Parameter indexes
+     */
     enum class Param_t
     {
+        /**
+         * @brief Betta
+         */
         BETTA = 0,
+        /**
+         * @brief Mu
+         */
         NU,
-        M
+        M,
+        NUM
     };
 
     explicit SIRModel( Cell *parentCell, QObject * parent = 0 );
