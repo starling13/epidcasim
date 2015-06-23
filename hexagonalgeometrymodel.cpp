@@ -25,7 +25,8 @@ QString HexagonalGeometryModel::m_description =
     QObject::tr("Hexagonal");
 
 HexagonalGeometryModel::
-HexagonalGeometryModel()
+HexagonalGeometryModel() :
+GeometryModel(QObject::tr("Hexagonal"), NULL)
 {
     m_nearest = new NearestModel(*this);
     m_neighboursModels.push_back(m_nearest);
@@ -33,7 +34,7 @@ HexagonalGeometryModel()
 
 HexagonalGeometryModel::
 HexagonalGeometryModel(Grid *grid) :
-GeometryModel(grid)
+GeometryModel(QObject::tr("Hexagonal"), grid)
 {
     m_nearest = new NearestModel(*this);
     m_neighboursModels.push_back(m_nearest);
@@ -46,7 +47,7 @@ HexagonalGeometryModel::~HexagonalGeometryModel()
 
 HexagonalGeometryModel::
 NearestModel::NearestModel(GeometryModel &geometry) :
-    NeighboursModel(geometry)
+NeighboursModel(QObject::tr("Nearest"), geometry)
 {
 
 }

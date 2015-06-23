@@ -31,7 +31,6 @@ public:
     public:
         NearestModel(GeometryModel & geometry);
         ModelIndex::List neighbours( ModelIndex index ) const;
-        QString description() const { return QObject::tr("Nearest"); }
     };
 
     HexagonalGeometryModel();

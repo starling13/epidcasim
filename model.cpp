@@ -27,20 +27,20 @@ ModelIndex::ModelIndex() :
     m_row(0),
     m_column(0)
 {
-
 }
 
 ModelIndex::ModelIndex(int col, int row) :
     m_row(row),
     m_column(col)
 {
-
 }
 
-NeighboursModel::NeighboursModel(GeometryModel &geometry) :
-m_geometryModel(geometry)
+NeighboursModel::NeighboursModel(
+  const QString &description,
+  GeometryModel &geometry) :
+m_geometryModel(geometry),
+m_description(description)
 {
-
 }
 
 GeometryModel::GeometryModel() :
@@ -50,17 +50,19 @@ m_neighboursModel(NULL)
 {
 }
 
-GeometryModel::GeometryModel(Grid * grid) :
+GeometryModel::GeometryModel(
+  const QString &description,
+  Grid *grid) :
 m_grid(grid),
 m_cellRadius(10),
-m_neighboursModel(NULL)
+m_neighboursModel(NULL),
+m_description(description)
 {
     qDebug() << __PRETTY_FUNCTION__;
 }
 
 GeometryModel::~GeometryModel()
 {
-
 }
 
 const NeighboursModel & GeometryModel::
@@ -74,13 +76,9 @@ neighboursModel() const
 
 RectangularGeometryModel::VNNeighboursModel::
 VNNeighboursModel(GeometryModel & geometryModel) :
-NeighboursModel(geometryModel)
+NeighboursModel(QObject::tr("Von Neuman"), geometryModel)
 {
-
 }
-
-QString RectangularGeometryModel::m_description =
-        QString::fromUtf8("Rectangular");
 
 ModelIndex::List
 RectangularGeometryModel::VNNeighboursModel::
@@ -102,7 +100,8 @@ neighbours( ModelIndex index ) const
 
 
 RectangularGeometryModel::
-RectangularGeometryModel()
+RectangularGeometryModel() :
+GeometryModel(QObject::tr("Rectangular"), NULL)
 {
     m_vn = new VNNeighboursModel(*this);
     m_neighboursModels.push_back(m_vn);
@@ -110,7 +109,7 @@ RectangularGeometryModel()
 
 RectangularGeometryModel::
 RectangularGeometryModel(Grid * grid) :
-GeometryModel(grid)
+GeometryModel(QObject::tr("Rectangular"), grid)
 {
     m_vn = new VNNeighboursModel(*this);
     m_neighboursModels.push_back(m_vn);
@@ -118,7 +117,6 @@ GeometryModel(grid)
 
 RectangularGeometryModel::~RectangularGeometryModel()
 {
-
 }
 
 QPoint RectangularGeometryModel::
@@ -145,8 +143,7 @@ cellIndex(QPoint position) const
     int row = position.y() / (2*m_cellRadius);
     int col = 0;
 
-    if (row < m_grid->size().height() )
-    {
+    if (row < m_grid->size().height()) {
         col = position.x() / (2*m_cellRadius);
         if (col < m_grid->size().width())
             result.setColumn(col), result.setRow(row);
@@ -155,10 +152,11 @@ cellIndex(QPoint position) const
     return result;
 }
 
-Cell::Cell(Grid *parentGrid,
-           ModelIndex index,
-           const FSMModel &fsModel) :
-m_grid( parentGrid ),
+Cell::Cell(
+  Grid *parentGrid,
+  ModelIndex index,
+  const FSMModel &fsModel) :
+m_grid(parentGrid),
 m_index(index)
 {
     m_fsModel = fsModel.clone(this);
@@ -169,17 +167,17 @@ Cell::~Cell()
    delete m_fsModel;
 }
 
-Grid::Grid( QSize size,
-            GeometryModel &geometryModel,
-            FSMModel &fsmModel ) :
+Grid::Grid(
+  QSize size,
+  GeometryModel &geometryModel,
+  FSMModel &fsmModel) :
 m_size(size),
 m_neighboursModel(geometryModel.neighboursModel()),
 m_geometryModel(geometryModel),
 m_fsmEtalonModel(&fsmModel)
 {
     this->m_cells = new Cell**[size.width()];
-    for(int i=0; i<size.width(); ++i)
-    {
+    for(int i=0; i<size.width(); ++i) {
         this->m_cells[i] = new Cell*[size.height()];
         for(int j=0; j<size.height(); ++j)
             this->m_cells[i][j] =
@@ -202,8 +200,7 @@ Grid::~Grid()
 void Grid::step( int count )
 {
     int step = 0;
-    while( (step++) < count )
-    {
+    while((step++) < count) {
         // Zeroing full model variables
         for (int k=0;
              k<m_fsmEtalonModel->variables().size();
@@ -230,7 +227,7 @@ void Grid::step( int count )
 
 Cell & Grid::cell( ModelIndex index )
 {
-    Q_ASSERT( index.isValid() );
+    Q_ASSERT(index.isValid());
 
     return *m_cells[index.column()][index.row()];
 }
