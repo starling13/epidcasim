@@ -35,7 +35,7 @@ ModelIndex::ModelIndex(int col, int row) :
 {
 }
 
-NeighboursModel::NeighboursModel(
+NeighbourhoodModel::NeighbourhoodModel(
   const QString &description,
   GeometryModel &geometry) :
 m_geometryModel(geometry),
@@ -65,7 +65,7 @@ GeometryModel::~GeometryModel()
 {
 }
 
-const NeighboursModel & GeometryModel::
+const NeighbourhoodModel & GeometryModel::
 neighboursModel() const
 {
     if (this->m_neighboursModel == NULL)
@@ -76,7 +76,7 @@ neighboursModel() const
 
 RectangularGeometryModel::VNNeighboursModel::
 VNNeighboursModel(GeometryModel & geometryModel) :
-NeighboursModel(QObject::tr("Von Neuman"), geometryModel)
+NeighbourhoodModel(QObject::tr("Von Neuman"), geometryModel)
 {
 }
 
@@ -197,7 +197,7 @@ Grid::~Grid()
     delete this->m_fsmEtalonModel;
 }
 
-void Grid::step( int count )
+void Grid::step(int count)
 {
     int step = 0;
     while((step++) < count) {

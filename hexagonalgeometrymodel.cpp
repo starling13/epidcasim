@@ -47,7 +47,7 @@ HexagonalGeometryModel::~HexagonalGeometryModel()
 
 HexagonalGeometryModel::
 NearestModel::NearestModel(GeometryModel &geometry) :
-NeighboursModel(QObject::tr("Nearest"), geometry)
+NeighbourhoodModel(QObject::tr("Nearest"), geometry)
 {
 
 }

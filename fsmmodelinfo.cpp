@@ -58,7 +58,7 @@ void FSMModelInfo::setModel(FSMModel *model)
     for (int i=0; i<varNames.size(); ++i)
     {
         VarSpinBox * field = new VarSpinBox(i);
-        field->setMaximum( 100000.0 );
+	field->setMaximum(4000000000.f);
         field->setValue( m_model->variables()[i] );
         m_fields.push_back(field);
         this->connect( field,

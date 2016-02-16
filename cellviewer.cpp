@@ -79,7 +79,7 @@ void CellViewer::mouseReleaseEvent(QMouseEvent * event)
         ci->setWindowTitle(QString::number(m_selectedIndex.column())+
                            QString(" : ")+
                            QString::number(m_selectedIndex.row()) );
-        ci->setModel( &m_grid->cell( m_selectedIndex ).fsModel() );
+	ci->setModel(&m_grid->cell( m_selectedIndex ).fsModel() );
         ci->show();
     }
 }
@@ -128,6 +128,7 @@ void CellViewer::drawGrid()
             coord.setY( coord.y() + 10 );
             m_painter.drawPoint( coord );
         }
+
     if (m_selectedIndex.isValid())
     {
         m_painter.setPen(QPen(QBrush(Qt::yellow), 1));

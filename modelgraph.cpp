@@ -61,7 +61,7 @@ ModelGraph::ModelGraph(FSMModelTrack &track, QWidget *parent) :
     QwtPlotGrid *grid = new QwtPlotGrid;
 
 #if (QWT_VERSION < 0x060100)
-    grid->setMajPen( QPen( Qt::darkGray, 1, Qt::SolidLine ) );
+    grid->setMajorPen(); QPen( Qt::darkGray, 1, Qt::SolidLine ) );
     grid->setMinPen( QPen( Qt::lightGray, 1, Qt::SolidLine ) );
 #else
     grid->setMajorPen( QPen( Qt::darkGray, 1, Qt::SolidLine ) );

@@ -28,8 +28,8 @@
 #include <QSize>
 #include <QList>
 #include <QString>
-
 #include <QObject>
+
 #include "fsmmodel.hpp"
 
 class Cell;
@@ -81,7 +81,7 @@ private:
     int m_column;
 };
 
-class NeighboursModel
+class NeighbourhoodModel
 {
 public:
 
@@ -94,17 +94,24 @@ public:
 
 protected:
 
-    NeighboursModel(
+    NeighbourhoodModel(
       const QString & description,
       GeometryModel & geometry);
 
-    GeometryModel & m_geometryModel;
+    GeometryModel &m_geometryModel;
 
 private:
 
     QString m_description;
 };
 
+/**
+ * @brief Abstract grid geometry model
+ *
+ * The main purpose of the objects of classes, derived from this,
+ * is to make mutual conversions between model indexes and 2d rect coordinates
+ * of the cells
+ */
 class GeometryModel
 {
 public:
@@ -120,7 +127,7 @@ public:
         return m_description;
     }
 
-    QVector<NeighboursModel*> & neighbours()
+    QVector<NeighbourhoodModel*> &neighbours()
     {
         return m_neighboursModels;
     }
@@ -135,9 +142,9 @@ public:
         m_cellRadius = radius;
     }
 
-    const NeighboursModel & neighboursModel() const;
+    const NeighbourhoodModel & neighboursModel() const;
 
-    void setNeigboursModel(NeighboursModel & model)
+    void setNeigboursModel(NeighbourhoodModel & model)
     {
         m_neighboursModel = &model;
     }
@@ -160,24 +167,27 @@ protected:
       const QString &description,
       Grid *grid);
 
-    Grid * m_grid;
+    Grid *m_grid;
 
     qreal m_cellRadius;
 
-    NeighboursModel * m_neighboursModel;
+    NeighbourhoodModel *m_neighboursModel;
 
-    QVector<NeighboursModel*> m_neighboursModels;
+    QVector<NeighbourhoodModel*> m_neighboursModels;
 
 private:
 
     QString m_description;
 };
 
+/**
+ * @brief Rectangular grid geometry model
+ */
 class RectangularGeometryModel : public GeometryModel
 {
 public:
 
-    class VNNeighboursModel : public NeighboursModel
+    class VNNeighboursModel : public NeighbourhoodModel
     {
     public:
         VNNeighboursModel(GeometryModel & geometryModel);
@@ -235,6 +245,9 @@ private:
     const ModelIndex m_index;
 };
 
+/**
+ * @brief The cellular automata grid (et of cells)
+ */
 class Grid
 {
 public:
@@ -246,46 +259,47 @@ public:
 
     ~Grid();
 
-    const NeighboursModel & neighModel() const
+    const NeighbourhoodModel &neighModel() const
     {
         return m_neighboursModel;
     }
 
-    GeometryModel & geometryModel()
+    GeometryModel &geometryModel()
     {
         return m_geometryModel;
     }
 
-    const GeometryModel & geometryModel() const
+    const GeometryModel &geometryModel() const
     {
         return m_geometryModel;
     }
 
-    FSMModel & fsmModel()
+    FSMModel &fsmModel()
     {
         return *m_fsmEtalonModel;
     }
 
-    const FSMModel & fsmModel() const
+    const FSMModel &fsmModel() const
     {
         return *m_fsmEtalonModel;
     }
 
-    void step( int count = 1 );
+    void step(int count = 1);
 
-    Cell & cell(ModelIndex index);
+    Cell &cell(ModelIndex index);
 
-    const QSize & size() const
+    const QSize &size() const
     {
         return m_size;
     }
 
 private:
-    Cell *** m_cells;
+
+    Cell ***m_cells;
     QSize m_size;
-    const NeighboursModel & m_neighboursModel;
-    GeometryModel & m_geometryModel;
-    FSMModel * m_fsmEtalonModel;
+    const NeighbourhoodModel &m_neighboursModel;
+    GeometryModel &m_geometryModel;
+    FSMModel	*m_fsmEtalonModel;
 };
 
 #endif // MODEL_HPP

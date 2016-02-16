@@ -93,9 +93,12 @@ void MainWindow::on_stepButton_clicked()
     for (int i=0; i<ui->stepsCount->value(); ++i)
     {
         dialog.setValue(i);
-        m_grid->step( );
-        if (dialog.wasCanceled()) break;
+	m_grid->step();
+
+	if (dialog.wasCanceled())
+		break;
     }
+    ui->viewer->update();
 }
 
 void MainWindow::on_maxDisplayField_valueChanged(double newVal)

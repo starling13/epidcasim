@@ -100,7 +100,7 @@ void ModelPropertiesDialog::geometrySelected(int index)
     for (QObject *child : m_neighboursGroup->buttons())
         delete child;
     int ind = 0;
-    for(NeighboursModel * model : m_geometryModel->neighbours())
+    for(NeighbourhoodModel * model : m_geometryModel->neighbours())
     {
         QRadioButton * rb = new QRadioButton;
         rb->setText(model->description());

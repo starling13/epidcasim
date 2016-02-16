@@ -26,7 +26,7 @@
 class HexagonalGeometryModel : public GeometryModel
 {
 public:
-    class NearestModel : public NeighboursModel
+    class NearestModel : public NeighbourhoodModel
     {
     public:
         NearestModel(GeometryModel & geometry);
