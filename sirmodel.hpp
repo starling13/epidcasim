@@ -37,17 +37,11 @@ public:
      */
     enum class Var_t
     {
-        /**
-         * @brief Susceptible
-         */
+	/** @brief Susceptible */
         S = 0,
-        /**
-         * @brief Infectious
-         */
+	/** @brief Infectious */
         I,
-        /**
-         * @brief Recovered
-         */
+	/** @brief Recovered */
         R,
         NUM_VARS
     };
@@ -57,32 +51,33 @@ public:
      */
     enum class Param_t
     {
-        /**
-         * @brief Betta
-         */
+	/** @brief Beta infection transmit rate */
         BETTA = 0,
-        /**
-         * @brief Mu
-         */
+	/** @brief Nu recovery rate */
         NU,
+	/** @brief M mortality */
         M,
         NUM
     };
 
-    explicit SIRModel( Cell *parentCell, QObject * parent = 0 );
+    /**
+     * @brief Constructor
+     * @param cell pointer to the model cell
+     * @param parent parent QObject
+     */
+    explicit SIRModel(Cell*, QObject* = nullptr);
 
-    FSMModel * clone(Cell * parentCell) const;
-    const FSMModel::VarNames & varNames() const { return m_varNames; }
-    FSMModel::Variables & parameters() { return m_parameters; }
+    FSMModel *clone(Cell*) const;
+    const FSMModel::VarNames &varNames() const { return m_varNames; }
     const FSMModel::VarNames & paramNames() const { return m_paramNames; }
 
-    qreal & S() { return m_variables[int(Var_t::S)]; }
-    qreal & I() { return m_variables[int(Var_t::I)]; }
-    qreal & R() { return m_variables[int(Var_t::R)]; }
+    qreal &S() { return m_variables[int(Var_t::S)]; }
+    qreal &I() { return m_variables[int(Var_t::I)]; }
+    qreal &R() { return m_variables[int(Var_t::R)]; }
 
-    static qreal & P_BETTA() { return m_parameters[int(Param_t::BETTA)]; }
-    static qreal & P_NU() { return m_parameters[int(Param_t::NU)]; }
-    static qreal & P_M() { return m_parameters[int(Param_t::M)]; }
+    static qreal &P_BETTA() { return m_parameters[int(Param_t::BETTA)]; }
+    static qreal &P_NU() { return m_parameters[int(Param_t::NU)]; }
+    static qreal &P_M() { return m_parameters[int(Param_t::M)]; }
 
 public slots:
     void step();
@@ -102,6 +97,10 @@ private:
     static FSMModel::Variables m_parameters;
     static FSMModel::VarNames m_paramNames;
     static ClassInitializer m_initializer;
+
+    // FSMModel interface
+public:
+    Variables &parameters() override { return m_parameters; }
 };
 
 #endif // SIRMODEL_HPP

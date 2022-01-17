@@ -95,7 +95,7 @@ CholeraModel::CholeraModel(Cell *parentCell, QObject *parent) :
     for (int i=0; i<m_nextStepVars.size(); ++i)
         m_nextStepVars[i] = 0.0;
 
-    // Начальные значения ячеек
+    // Initial variables values
     S() = 100.0;
 }
 
@@ -106,11 +106,10 @@ FSMModel *CholeraModel::clone(Cell *parentCell) const
 
 void CholeraModel::step()
 {
-    // Генератор случайных чисел, который создается один раз
-    // для всех вызовов функции
+    // Singleton of the random numbers generator
     static std::default_random_engine generator;
 
-    // Элементы многочленов уравнений состояния
+    // State-equations polynoms members
     qreal ALPHA_BETAn_S_Bn_over_Kn_PLUS_Bn = 0.0,
           ALPHA_BETAl_S_Bl_over_Kl_PLUS_Bl = 0.0,
           MU_S = 0.0,
@@ -127,9 +126,7 @@ void CholeraModel::step()
     switch (m_type)
     {
     case FSMModel::ModelType_t::DETERMINATE:
-    // Вычисление элементов многочленов уравнений состояния для
-    // детерминированного варианта модели
-
+    // Determinate model
         ALPHA_BETAn_S_Bn_over_Kn_PLUS_Bn =
                 P_ALPHA()*P_BETTA_N()*S()*Bn()/( P_K_N()+Bn() );
 
@@ -159,9 +156,7 @@ void CholeraModel::step()
         break;
     case FSMModel::ModelType_t::STOCHASTIC:
     {
-    // Вычисление элементов многочленов уравнений состояния для
-    // стохастического варианта модели с использованием случайных
-    // чисел, распределнных по биномиальному закону
+    // Stochastic model
 
         if (S() > 0)
         {

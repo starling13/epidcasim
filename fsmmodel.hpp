@@ -63,10 +63,10 @@ public:
      */
     typedef QVector<QString> VarNames;
 
-    const Variables & variables() const { return m_variables; }
-    Variables & variables() { return m_variables; }
+    const Variables &variables() const { return m_variables; }
+    Variables &variables() { return m_variables; }
 
-    virtual Variables & parameters() = 0;
+    virtual Variables &parameters() = 0;
 
     /**
      * @brief Get variables description for the concrete model class

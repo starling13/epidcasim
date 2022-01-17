@@ -57,8 +57,6 @@ void CellViewer::paintEvent(QPaintEvent*)
 
 void CellViewer::mouseReleaseEvent(QMouseEvent * event)
 {
-    qDebug() << __PRETTY_FUNCTION__;
-    qDebug() << event->posF();
     if (m_grid == NULL)
         return;
 

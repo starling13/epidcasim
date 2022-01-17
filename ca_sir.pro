@@ -42,7 +42,7 @@ FORMS += \
     modelgraph.ui \
     model.ui
 
-LIBS += -lqwt
+LIBS += -lqwt-qt5
 
 INCLUDEPATH += /usr/include/qwt
 

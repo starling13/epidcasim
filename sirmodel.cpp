@@ -54,10 +54,10 @@ SIRModel::ClassInitializer::ClassInitializer()
     SIRModel::m_paramNames.push_back("Nu");
     SIRModel::m_paramNames.push_back("M");
 
-    SIRModel::m_parameters.resize( int(SIRModel::Param_t::NUM) );
-    SIRModel::m_parameters[ int(SIRModel::Param_t::BETTA) ] = D_BETTA;
-    SIRModel::m_parameters[ int(SIRModel::Param_t::NU) ] = D_NU;
-    SIRModel::m_parameters[ int(SIRModel::Param_t::M) ] = D_M;
+    SIRModel::m_parameters.resize(int(SIRModel::Param_t::NUM));
+    SIRModel::m_parameters[int(SIRModel::Param_t::BETTA)] = D_BETTA;
+    SIRModel::m_parameters[int(SIRModel::Param_t::NU)] = D_NU;
+    SIRModel::m_parameters[int(SIRModel::Param_t::M)] = D_M;
 }
 
 SIRModel::ClassInitializer::~ClassInitializer()
@@ -106,7 +106,7 @@ void SIRModel::step()
     nextI() = I() + BETTA_SI - NU_I;
     nextR() = R() + NU_I;
 
-    for ( ModelIndex index : neighbours )
+    for (ModelIndex index : neighbours)
     {
         SIRModel *model = qobject_cast<SIRModel*>
                 ( &m_parentCell->grid()->cell(index).fsModel() );
