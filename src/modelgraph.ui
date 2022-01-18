@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>452</width>
-    <height>316</height>
+    <width>465</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>State variables graph</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>

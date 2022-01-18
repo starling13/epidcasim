@@ -93,12 +93,15 @@ void MainWindow::on_stepButton_clicked()
     for (int i=0; i<ui->stepsCount->value(); ++i)
     {
         dialog.setValue(i);
-	m_grid->step();
+        m_grid->step();
 
-	if (dialog.wasCanceled())
-		break;
+        if (dialog.wasCanceled())
+            break;
+
+        ui->viewer->update();
+
+        QApplication::instance()->processEvents();
     }
-    ui->viewer->update();
 }
 
 void MainWindow::on_maxDisplayField_valueChanged(double newVal)

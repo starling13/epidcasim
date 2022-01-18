@@ -96,7 +96,7 @@ CholeraModel::CholeraModel(Cell *parentCell, QObject *parent) :
         m_nextStepVars[i] = 0.0;
 
     // Initial variables values
-    S() = 100.0;
+    S() = 1000.0;
 }
 
 FSMModel *CholeraModel::clone(Cell *parentCell) const
